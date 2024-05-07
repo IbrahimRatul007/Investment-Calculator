@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const InvestmentForm = () => {
+const InvestmentForm = ({ onCalculate }) => {
   const [inputValues, setInputValues] = useState({
     currentSavings: 0,
     yearlySavings: 0,
@@ -22,22 +22,18 @@ const InvestmentForm = () => {
     e.preventDefault();
     setInputValues((prevValue) => {
       const id = e.target.id;
-      return { ...prevValue, [e.target.name]: e.target.value };
-      //   if (id == "current-savings") {
-      //     return { ...prevValue, currentSavings: e.target.value };
-      //   } else if (id == "yearly-contribution") {
-      //     return { ...prevValue, yearlySavings: e.target.value };
-      //   } else if (id == "expected-return") {
-      //     return { ...prevValue, expectedInterests: e.target.value };
-      //   } else if (id == "duration") {
-      //     return { ...prevValue, investmentDuration: e.target.value };
-      //   }
+      return { ...prevValue, [e.target.name]: Number(e.target.value) };
     });
   };
-  console.log(inputValues);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(inputValues, "anne");
+    onCalculate(inputValues);
+  };
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={submitHandler}>
       <div className="input-group">
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
